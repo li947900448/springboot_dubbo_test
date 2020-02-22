@@ -1,0 +1,9 @@
+server:
+  port: 8081
+  context-path: /
+
+spring:
+     data:
+        redis:
+            repositories:
+                enabled: false
