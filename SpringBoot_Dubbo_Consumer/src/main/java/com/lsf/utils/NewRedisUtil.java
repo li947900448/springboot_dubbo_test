@@ -2,7 +2,9 @@ package com.lsf.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +14,14 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Administrator on 2020/2/22.
  */
-public class RedisUtil {
+@Component
+public final class NewRedisUtil {
 
     /**
      * Redis操作对象
      */
-    @Autowired
-    private static RedisTemplate<String, String> redisTemplate;
+    @Resource
+    private  RedisTemplate<String, String> redisTemplate;
 
 
     /**
@@ -27,7 +30,7 @@ public class RedisUtil {
      *  @param 			: value
      *  @createDate  	: 2017年7月21日 上午9:38:52
      */
-    public static void set(String key, String value){
+    public  void set(String key, String value){
         redisTemplate.opsForValue().set(key, value);
     }
 
@@ -37,7 +40,7 @@ public class RedisUtil {
      *	@return 		: String
      *  @createDate  	: 2017年7月21日 上午9:43:36
      */
-    public static String get(String key){
+    public  String get(String key){
         return redisTemplate.opsForValue().get(key);
     }
 
@@ -49,7 +52,7 @@ public class RedisUtil {
      *	@return 		: void
      *  @createDate  	: 2017年7月21日 上午9:44:15
      */
-    public static  void set(String key, int seconds, String value){
+    public   void set(String key, int seconds, String value){
         redisTemplate.opsForValue().set(key, value, seconds, TimeUnit.SECONDS);
     }
 
@@ -60,7 +63,7 @@ public class RedisUtil {
      *	@return 		: String
      *  @createDate  	: 2017年7月21日 上午9:45:49
      */
-    public static String getSet(String key, String value){
+    public  String getSet(String key, String value){
         return redisTemplate.opsForValue().getAndSet(key, value);
     }
 
@@ -70,7 +73,7 @@ public class RedisUtil {
      *	@return 		: List<String>
      *  @createDate  	: 2017年7月21日 上午9:46:46
      */
-    public static List<String> multiGet(Collection<String> keys){
+    public  List<String> multiGet(Collection<String> keys){
         return redisTemplate.opsForValue().multiGet(keys);
     }
 
@@ -79,7 +82,7 @@ public class RedisUtil {
      *  @param 			: map
      *  @createDate  	: 2017年7月21日 上午9:47:32
      */
-    public static void multiSet(Map<String, String> map){
+    public  void multiSet(Map<String, String> map){
         redisTemplate.opsForValue().multiSet(map);
     }
 
@@ -89,7 +92,7 @@ public class RedisUtil {
      *  @param 			: seconds
      *  @createDate  	: 2017年7月21日 上午9:48:19
      */
-    public static void expire(String key, int seconds){
+    public  void expire(String key, int seconds){
         redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
     }
 
@@ -99,7 +102,7 @@ public class RedisUtil {
      *	@return 		: long
      *  @createDate  	: 2017年7月21日 上午10:13:35
      */
-    public static long getExpireTime(String key){
+    public  long getExpireTime(String key){
         return getExpireTime(key, TimeUnit.SECONDS);
     }
 
@@ -109,7 +112,7 @@ public class RedisUtil {
      *	@return 		: long
      *  @createDate  	: 2017年7月21日 上午10:13:35
      */
-    public static long getExpireTime(String key, TimeUnit timeUnit){
+    public  long getExpireTime(String key, TimeUnit timeUnit){
         return redisTemplate.getExpire(key, timeUnit);
     }
 
@@ -119,7 +122,7 @@ public class RedisUtil {
      *	@return 		: void
      *  @createDate  	: 2017年7月21日 上午9:49:55
      */
-    public static void deleteByKey(String key){
+    public  void deleteByKey(String key){
         redisTemplate.delete(key);
     }
 
@@ -128,7 +131,7 @@ public class RedisUtil {
      *  @param 			: keys
      *  @createDate  	: 2017年7月21日 上午10:15:50
      */
-    public static void deleteByKeys(Collection<String> keys){
+    public  void deleteByKeys(Collection<String> keys){
         redisTemplate.delete(keys);
     }
 
@@ -138,7 +141,7 @@ public class RedisUtil {
      *	@return 		: boolean
      *  @createDate  	: 2017年7月21日 上午10:16:35
      */
-    public static boolean existsKey(String key){
+    public  boolean existsKey(String key){
         return redisTemplate.hasKey(key);
     }
 
@@ -147,7 +150,7 @@ public class RedisUtil {
      *  @param 			: key
      *  @createDate  	: 2017年7月21日 上午10:18:14
      */
-    public static void incr(String key){
+    public  void incr(String key){
         incr(key, 1);
     }
 
@@ -157,7 +160,7 @@ public class RedisUtil {
      *  @param 			: num
      *  @createDate  	: 2017年7月21日 上午10:18:48
      */
-    public static void incr(String key, long num){
+    public  void incr(String key, long num){
         redisTemplate.opsForValue().increment(key, num);
     }
 
@@ -167,7 +170,7 @@ public class RedisUtil {
      *	@return 		: void
      *  @createDate  	: 2017年7月21日 上午10:19:27
      */
-    public static void decr(String key){
+    public  void decr(String key){
         incr(key, -1);
     }
 
@@ -177,7 +180,7 @@ public class RedisUtil {
      *  @param 			: num
      *  @createDate  	: 2017年7月21日 上午10:18:48
      */
-    public static void decr(String key, long num){
+    public  void decr(String key, long num){
         incr(key, -1 * num);
     }
 
@@ -188,7 +191,7 @@ public class RedisUtil {
      *  @param 			: value
      *  @createDate  	: 2017年7月21日 上午10:20:04
      */
-    public static void hset(String tbName, String key, String value){
+    public  void hset(String tbName, String key, String value){
         redisTemplate.opsForHash().put(tbName, key, value);
     }
 
@@ -199,7 +202,7 @@ public class RedisUtil {
      *	@return 		: Object
      *  @createDate  	: 2017年7月21日 上午10:20:45
      */
-    public static Object hget(String tbName, String key){
+    public  Object hget(String tbName, String key){
         return redisTemplate.opsForHash().get(tbName, key);
     }
 
@@ -209,7 +212,7 @@ public class RedisUtil {
      *	@return 		: Map<Object,Object>
      *  @createDate  	: 2017年7月21日 上午10:21:27
      */
-    public static Map<Object, Object> hget(String tbName){
+    public  Map<Object, Object> hget(String tbName){
         return redisTemplate.opsForHash().entries(tbName);
     }
 
@@ -219,7 +222,7 @@ public class RedisUtil {
      *  @param 			: key
      *  @createDate  	: 2017年7月21日 上午10:24:29
      */
-    public static void hdel(String tbName, String key){
+    public  void hdel(String tbName, String key){
         redisTemplate.opsForHash().delete(tbName, key);
     }
 
@@ -230,7 +233,7 @@ public class RedisUtil {
      *	@return 		: List<Object>
      *  @createDate  	: 2017年7月21日 上午10:25:18
      */
-    public static List<Object> hmultiGet(String tbName, Collection<Object> keys){
+    public  List<Object> hmultiGet(String tbName, Collection<Object> keys){
         return redisTemplate.opsForHash().multiGet(tbName, keys);
     }
 
@@ -239,7 +242,7 @@ public class RedisUtil {
      * @param regex
      * @return
      */
-    public static Set<String> keys(String regex){
+    public  Set<String> keys(String regex){
         return redisTemplate.keys("regex"+"*");
     }
 
@@ -248,7 +251,7 @@ public class RedisUtil {
      * @param regex
      * @return
      */
-    public static int countKeys(String regex){
+    public  int countKeys(String regex){
         return keys(regex).size();
     }
 
@@ -257,7 +260,7 @@ public class RedisUtil {
      * @param key 键
      * @param value 值
      */
-    public static void lpush(String key, String value){
+    public  void lpush(String key, String value){
         redisTemplate.opsForList().leftPush(key, value);
     }
 
@@ -266,7 +269,7 @@ public class RedisUtil {
      * @param key
      * @return
      */
-    public static String rpop(String key){
+    public  String rpop(String key){
         return redisTemplate.opsForList().rightPop(key);
     }
 }

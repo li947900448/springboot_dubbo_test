@@ -57,7 +57,10 @@
             </list>
         </property> 
 	</bean>
-
+	<!--inject main list -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lsf.mapper" />
+	</bean>
 	<!-- 配置数据源 redis -->
 	<!-- 配置JedisPoolConfig实例 -->
 	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
